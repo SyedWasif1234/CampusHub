@@ -1,0 +1,102 @@
+
+🐱‍👤Dependencies:
+
+    npm init
+    npm i nodemon
+    npm i Express
+    npm i dotenv
+    npm install prisma --save-dev 
+    npm install @prisma/client    
+    npx prisma init
+    npm i cookie-parser  
+    npm i bcryptjs
+    npm i jsonwebtoken
+    
+
+
+🔍 Description
+
+    Create a backend API for a campus portal system where users have different 
+    roles (Student, Faculty, Admin). Each role has specific permissions to access and
+    modify resources like announcements, results, events, and course materials.
+    This project helps to understand RBAC, multi-role workflows, and proper access restrictions.
+
+🎯 End Goal
+
+    Express.js API with robust RBAC system
+    JWT authentication
+    API key requirement
+    Role-based route protection
+    Postman collection showing user flows for each role
+    Modular, clean, production-quality backend
+
+👥 Roles Involved
+
+    Student: View announcements, results, courses
+    Faculty: Upload course materials, post announcements
+    Admin: Manage users, publish results, full access
+
+📊 Tables to be Created
+
+    users (with role: student, faculty, admin)
+    api_keys
+    announcements
+    results
+    courses
+    materials
+
+🧾 API Routes to Build
+
+🔐 Auth & API Key:
+
+    POST /auth/register → Register user with a role (default: student)
+    POST /auth/login → Login, return JWT
+    POST /auth/api-key → Generate API key
+    GET /auth/me → Get current user profile
+
+📢 Announcements:
+
+    POST /announcements → Faculty/Admin only
+    GET /announcements → Accessible to all roles
+
+🎓 Results:
+
+    POST /results → Admin only
+    GET /results/:studentId →
+    Student: Only own results
+    Faculty/Admin: Any student's results
+
+📚 Courses & Materials:
+
+    GET /courses → All roles
+    POST /courses → Admin only
+    POST /courses/:courseId/materials → Faculty only
+    GET /courses/:courseId/materials → Students & faculty
+
+⚙ Admin-only:
+
+    GET /admin/users → List all users
+    PUT /admin/users/:id/role → Change user role
+
+🛡 RBAC Middleware Flow
+
+    Use middleware like checkRole(['admin', 'faculty'])
+    Protect each route based on allowed roles
+    Combine JWT + API key middleware
+
+🧠 Bonus
+
+    Notification system: Notify students when results/announcements are posted
+    Event calendar (create/view events based on role)
+    Attendance module (attendances table)
+    Course enrollment flow (enrollments table)
+
+✅ Deliverables Checklist
+
+    JWT auth + API Key system
+    Role-based access (RBAC for all routes)
+    CRUD for announcements, results, courses, materials
+    Route protection using middleware
+    DB schema + clean relationships
+    Postman collection with flows for all 3 roles
+    Bonus features (notifications, events, enrollments, attendance)
