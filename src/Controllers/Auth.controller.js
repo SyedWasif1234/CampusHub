@@ -1,4 +1,4 @@
-
+import { db } from "../lib/db.js"; 
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
@@ -7,9 +7,9 @@ export const  RegisterUser = async (req, res) => {
 
     try {
 
-        const {name, email, password , role} = req.body
+        const {name, email, password , role , enrollement_number} = req.body
   
-        if(!name || !email || !password || !role){
+        if(!name || !email || !password || !role ||!enrollement_number){
         console.log("Data is missing");
         return res.status(400).json({
             success: false,
@@ -39,6 +39,7 @@ export const  RegisterUser = async (req, res) => {
                 email,
                 password:Hashed_Password,
                 role,
+                enrollement_number,
                 verificationToken
             }
         })

@@ -100,3 +100,20 @@
     DB schema + clean relationships
     Postman collection with flows for all 3 roles
     Bonus features (notifications, events, enrollments, attendance)
+
+
+
+MODELS RELATION :-
+
+    📊 Summary Table
+
+        Relation_Type	        Model A	                Model B	                        Relation
+
+        1 : M	                  User	                 ApiKey	                user.apiKeys ↔ apiKey.user
+        1 : M	                User (faculty)	         Courses	             user.course ↔ courses.user
+        M : M (via Enrollment)	User (student)	         Courses	            user.enrollments ↔ courses.enrollments
+        M : M (via Results)	    User (student)	         Courses	             user.result ↔ courses.results
+        1 : M	                    User	           Announcements	        user.announcements ↔ announcement.user
+        1 : M	                  Courses	            Announcements            courses.announcements ↔ announcement.course
+        1 : M	                    User	              Materials	            user.materials ↔ materials.user
+        1 : M	                  Courses	              Materials	            courses.materials ↔ materials.course
