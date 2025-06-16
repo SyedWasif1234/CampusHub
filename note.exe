@@ -117,3 +117,20 @@ MODELS RELATION :-
         1 : M	                  Courses	            Announcements            courses.announcements ↔ announcement.course
         1 : M	                    User	              Materials	            user.materials ↔ materials.user
         1 : M	                  Courses	              Materials	            courses.materials ↔ materials.course
+
+
+
+ERROR:
+
+    faced an error Argument `course` is missing. while creating  create announcement controller , currently deleted the course relation 
+
+
+Prisma uses an object-based mutation structure for numeric operations like:(i used it in course controller)
+
+    increment
+
+    decrement
+
+    multiply
+
+    divide

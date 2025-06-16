@@ -85,7 +85,6 @@ model Courses {
   // Relations
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   materials     Materials[] // Materials for the course
-  announcements Announcements[] // Course-specific announcements
   results       Results[] // Results associated with the course
 }
 
@@ -124,11 +123,8 @@ model Announcements {
   title     String
   message   String
   createdAt DateTime @default(now())
-
-  courseId String
   userId   String // User ID (faculty/admin)
 
-  course Courses @relation(fields: [courseId], references: [id], onDelete: Cascade)
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 

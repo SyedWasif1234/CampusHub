@@ -48,7 +48,7 @@ export const Check_Admin = async(req, res , next) =>{
     }
 }
 
-export const Check_Faculty = (req , res , next) => {
+export const Check_Faculty_Admin = (req , res , next) => {
     try {
 
         const user_role = req.user.role;
@@ -62,6 +62,22 @@ export const Check_Faculty = (req , res , next) => {
         res.status(500).json({message:"error occured in check_faculty middleware"})
     }
 }
+
+export const Check_Faculty = (req , res , next) => {
+    try {
+
+        const user_role = req.user.role;
+        if(user_role === "FACULTY" ){
+            next()
+        } else {
+            res.status(400).json({message:"Unouthorised"})
+        }
+        
+    } catch (error) {
+        res.status(500).json({message:"error occured in check_faculty middleware"})
+    }
+}
+
 
 export const apiKeyAuthMiddleware  = async (req, res , next) => {
     try {
