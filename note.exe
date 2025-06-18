@@ -123,14 +123,32 @@ MODELS RELATION :-
 ERROR:
 
     faced an error Argument `course` is missing. while creating  create announcement controller , currently deleted the course relation 
+     do not try to select inside include.
+    **include** is used to include related models (relations like user, course, reviews, etc.).
+    **select** is used to choose specific fields from either the main model or inside an include.
 
-
+    i got error in router i accidentlt left the space "/get-result "<- here the space gae me error
+     
 Prisma uses an object-based mutation structure for numeric operations like:(i used it in course controller)
 
     increment
-
     decrement
-
     multiply
-
     divide
+
+
+NEW THINGS LEARNT :
+
+    role nased filteration
+
+    pagination of large user bases
+
+        const { page = 1, limit = 10 } = req.query;
+        const skip = (page - 1) * limit;
+
+        const users = await db.User.findMany({
+        skip: Number(skip),
+        take: Number(limit),
+        select: { ... }
+        });
+

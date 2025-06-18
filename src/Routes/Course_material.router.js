@@ -6,10 +6,10 @@ const router = Router()
 
 router.post("/create-course" , authMiddleware , Check_Admin , create_course)
 router.get("/get-courses" , authMiddleware , get_course)
-router.post("/course-Erollment", authMiddleware , course_Enrollment)
+router.post("/course-Erollment/:courseId", authMiddleware , course_Enrollment)
 
 router.post("/create-materials/:courseId" , authMiddleware , Check_Faculty , create_materials)
-router.get("/get-materials/:courseId" , authMiddleware , Check_Faculty , get_material)
+router.get("/get-materials/:courseId" , authMiddleware  , get_material)
 
 
 export default router

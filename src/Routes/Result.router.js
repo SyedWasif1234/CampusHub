@@ -5,8 +5,8 @@ import { createResult, get_any_student_result, get_own_result } from "../Control
 const router = Router();
 
 router.post("/create-results" , authMiddleware , Check_Admin , createResult)
-router.get("/get-result/:userId " , authMiddleware , get_own_result)
-router.get("get-results", authMiddleware , Check_Faculty_Admin , get_any_student_result)
+router.get("/get-result" , authMiddleware , get_own_result)
+router.get("/get-any-student-results/:userId", authMiddleware , Check_Faculty_Admin , get_any_student_result)
 
 export default router
 

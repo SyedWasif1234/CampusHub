@@ -37,7 +37,6 @@ export const create_course = async(req , res) => {
         })
         
     } catch (error) {
-        console.log("errro occured in creating course controller",error);
         res.status(500).json({
             message:"error occured while creating course",
             error
@@ -48,7 +47,8 @@ export const create_course = async(req , res) => {
 export const course_Enrollment = async(req, res)=>{
     try {
         const userId = req.user.id
-        const {courseId} = req.body
+        const {courseId} = req.params;
+        if(!courseId) return res.status(400).json({message:"courseId is missing"})
 
         const Enrollment = await db.Enrollment.create({
             data:{
@@ -64,10 +64,7 @@ export const course_Enrollment = async(req, res)=>{
             increment: 1,
             },
           },
-       })
-
-       console.log(updated_course_detail);
-       
+       })     
 
         res.status(201).json({
             message: "Enrollment successful",
@@ -76,7 +73,6 @@ export const course_Enrollment = async(req, res)=>{
 
 
     } catch (error) {
-        console.error("Enrollment failed:", error);
         res.status(500).json({
         message: "Enrollment failed",
         error,
@@ -87,16 +83,12 @@ export const get_course = async (req , res) =>{
     try {
         const list_of_courses = await db.Courses.findMany()
          let x=1
-        list_of_courses.map((course)=>{
-            console.log(`course${x}: ${JSON.stringify(course,null,2)}`)
-            x++;
-        })
+
         res.status(200).json({
             message:"corses fetched succefully",
             list_of_courses
         })
     } catch (error) {
-        console.error("error occured while fetching the courses:", error);
         res.status(500).json({
         message: "error occured while fetching the courses",
         error,
@@ -104,9 +96,88 @@ export const get_course = async (req , res) =>{
     }
 }
 
-export const create_materials = async (req , res) =>{}
+export const create_materials = async (req , res) =>{
+    try {
+        const {courseId} = req.params;
+        
+        const {title , description , fileUrl ,type } = req.body ;
+        if(!title || !description || !fileUrl || !type){
+            return res.status(400).json({
+                message:"every field is required"
+            })
+        }
+       
+        const facultyId = req.user.id;
 
-export const get_material = async (req , res) =>{}
+        const course_material = await db.Materials.create({
+            data:{
+                title,
+                description,
+                fileUrl,
+                type,
+                courseId:courseId,
+                userId:facultyId
+            }
+        })
+
+        res.status(200).json({
+            message:"material for particuler course added succesfully",
+            material:course_material
+        })
+
+    } catch (error) {
+        res.status(500).json({
+            message:"error occured while creating course material",
+            error
+        }) 
+    }
+}
+
+export const get_material = async (req , res) =>{
+    try {
+        const userId = req.user.id;
+        const {courseId  }= req.params;
+       
+        if(!courseId) return res.status(400).json({message:"courseId is missing"});
+
+        const checking_for_course_Enrollment = await db.Enrollment.findUnique({
+            where:{
+                 userId_courseId: {
+                    userId,
+                    courseId
+                }
+            }
+        })
+        if(!checking_for_course_Enrollment) {
+            return res.status(400).json({
+                message:"you have to enroll in a course to see materials"
+            })
+        }
+
+        const materials = await db.Materials.findMany({
+            where:{
+                courseId:courseId
+            },
+            include:{
+                course:{
+                    select:{
+                        name:true,
+                        code:true
+                    }
+                }
+            }
+        })
+        res.status(200).json({
+            message:"materials fetched successfully",
+            material:materials
+        })
+    } catch (error) {
+        res.status(500).json({
+            message:"error occured while fetching material",
+            error
+        })
+    }
+}
 
 
 

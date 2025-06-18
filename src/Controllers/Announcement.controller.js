@@ -15,15 +15,12 @@ export const create_Announcement = async(req,res) => {
         }
 
         const announcement = await db.Announcements.create({data})
-        console.log(announcement);
-        
-
+     
         res.status(201).json({
             message:"created successfully",
             announcement
         })
     } catch (error) {
-        console.log("error occured while createing anoncement",error);
         res.status(500).json({
             message:"error occured while creating announcement",
             error

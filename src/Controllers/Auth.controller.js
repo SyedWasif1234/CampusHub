@@ -10,7 +10,6 @@ export const  RegisterUser = async (req, res) => {
         const {name, email, password , role , enrollement_number} = req.body
   
         if(!name || !email || !password || !role ||!enrollement_number){
-        console.log("Data is missing");
         return res.status(400).json({
             success: false,
             message: "All fields are required"
@@ -44,7 +43,6 @@ export const  RegisterUser = async (req, res) => {
             }
         })
 
-        console.log(new_user)
         res.status(200).json({
             message:"user created Succefully",
             success:true ,
@@ -53,7 +51,6 @@ export const  RegisterUser = async (req, res) => {
 
 
     } catch (error) {
-        console.log("error occured while creating new user", error)
         res.status(500).json({
             message:"error occured while creating new user",
             success:false ,
@@ -69,7 +66,6 @@ export const  LoginUser = async (req, res) => {
      const {email , password} = req.body;
  
      if(!email || !password){
-         console.log("email  or passworf is missing");
          return res.status(500).json({
              message:"all fields are required"
          })
@@ -80,7 +76,6 @@ export const  LoginUser = async (req, res) => {
      })
  
      if(!user){
-         console.log("no user found")
           return res.status(404).json({
              message:"no user found"
          })
@@ -88,7 +83,6 @@ export const  LoginUser = async (req, res) => {
  
      const isMatch = await bcrypt.compare(password , user.password)
      if(!isMatch){
-         console.log("Incorrect password")
          return res.status(400).json({
              message:"Incorrect password"
          })
@@ -114,7 +108,6 @@ export const  LoginUser = async (req, res) => {
            }
         })
    } catch (error) {
-        console.log("error occured while loging in user", error)
         res.status(500).json({
             message:"error occured while loging in   user",
             success:false ,
@@ -167,8 +160,6 @@ export const UserProfile = async (req, res)=> {
             profile:User_profile
         })
     } catch (error) {
-
-        console.log("error occured while fetching user profile")
         res.status(500).json({message:"error occured while fetching user profile"})
         
     }
